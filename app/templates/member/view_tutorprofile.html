@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('member_dashboard') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Tutor Profiles</h2>
+
+  <!-- Workshops Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Tutor ID</th>
+        <th>Tutor Name</th>
+        <th>Position</th>
+        <th>phone</th>
+        <th>Email</th>
+        <th>Profile</th>
+        <th>Image</th>
+    
+      </tr>
+    </thead>
+    <tbody>
+      {% for tutor in view_tutorprofile %}
+      <tr>
+        <td>{{ tutor[0] }}</td>
+        <td>{{ tutor[1] }}</td>
+        <td>{{ tutor[2] }}</td>
+        <td>{{ tutor[3] }}</td>
+        <td>{{ tutor[4] }}</td>
+        <td>{{ tutor[5] }}</td>
+        <td><img src="{{ url_for('static', filename='images/tutors/' + tutor[6]) }}" alt="Profile Image" class="thumbnail" style="width: 120px; height: 120px; object-fit: cover;"></td>
+        <td><a href="{{ url_for('tutor_lessons', tutorid=tutor[0]) }}" class="btn btn-sm btn-primary">Lessons</a></td>
+
+        </tr>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

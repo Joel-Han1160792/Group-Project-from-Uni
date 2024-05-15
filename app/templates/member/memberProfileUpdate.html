@@ -1,0 +1,110 @@
+
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <button onclick="history.back()" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+<div class="mb-3">
+  <form action="{{url_for('updatememberprofile')}}" method="post">
+    <input
+      type="text"
+      class="form-control"
+      name="profileID"
+      value="{{member[0]}}"
+      hidden
+    />
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <select id="title" name="title" class="form-control" required>
+        <option value="" {% if not member[1] %} selected {% endif %}>
+          Please select your title
+        </option>
+        <option value="Mr." {% if member[1] == 'Mr.' %} selected {% endif %}>Mr.</option>
+        <option value="Mrs." {% if member[1] == 'Mrs.' %} selected {% endif %}>Mrs.</option>
+        <option value="Ms." {% if member[1] == 'Ms.' %} selected {% endif %}>Ms.</option>
+        <option value="Miss" {% if member[1] == 'Miss' %} selected {% endif %}>Miss</option>
+        <option value="Mx." {% if member[1] == 'Mx.' %} selected {% endif %}>Mx.</option>
+        <option value="Dr." {% if member[1] == 'Dr.' %} selected {% endif %}>Dr.</option>
+        <option value="Prof." {% if member[1] == 'Prof.' %} selected {% endif %}>Prof.</option>
+      </select>
+      <div class="invalid-feedback">
+        Please choose a title.
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label class="form-label">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="firstname"
+        value="{{member[2]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Family Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="familyname"
+        value="{{member[3]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Position</label>
+      <input
+        type="text"
+        class="form-control"
+        name="position"
+        value="{{member[4]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Phone Number</label>
+      <input
+        type="text"
+        class="form-control"
+        name="phone"
+        value="{{member[5]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        value="{{member[6]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Address</label>
+      <input
+        type="text"
+        class="form-control"
+        name="address"
+        value="{{member[7]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Date of Birth</label>
+      <input
+        type="date"
+        class="form-control"
+        name="dateofbirth"
+        value="{{member[8]}}"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Merino Breeding Details</label>
+      <textarea class="form-control" name="details">{{member[10]}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

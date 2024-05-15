@@ -1,0 +1,40 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <button onclick="history.back()" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Attendance Details for ({{ session_name }})</h2>
+    <a href="{{ url_for('manage_attendance') }}" class="btn btn-primary btn-sm"
+      >Mark Attendace</a
+    >
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Member Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ record.FirstName }} {{ record.FamilyName }}</td>
+        <td>{{ record.Email }}</td>
+        <td>
+          {% if record.Attended == 'Not Yet Recorded' %} Not Yet Recorded {%
+          else %} {{ 'Attended' if record.Attended else 'Absent' }} {% endif %}
+        </td>
+        <td>{{ record.Date }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

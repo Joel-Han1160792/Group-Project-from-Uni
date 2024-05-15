@@ -1,0 +1,95 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+    'manager_dashboard' } %} {% set current_back_urls =
+    back_urls[session.get('role')] %}
+    <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+</div>
+<div class="container mt-4"> 
+  <h2>Workshops</h2>
+  <!-- Search Form -->
+  <form class="d-flex my-4">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by the workshops' title"
+      aria-label="Search"
+      name="search"
+      value="{{ request.args.get('search', '') }}"
+    />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+  
+  <!-- Workshops Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
+        <th>Capacity</th>
+        <th>Cost</th>
+        <th>Tutor</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for workshop in workshops %}
+      <tr>
+        <td>{{ workshop.WorkshopID }}</a></td>
+        <td><a class="merino-link" href="/workshop/{{workshop.WorkshopID}}">{{ workshop.Title }}</a></td>
+        <td>{{ format_date( workshop.Date,  '%d/%m/%Y') }}</td>
+        <td>{{ workshop.Time }}</td>
+        <td>{{ workshop.Location }}</td>
+        <td>{{ workshop.Capacity }}</td>
+        <td>${{ workshop.Cost }}</td>
+  
+        <td><a class="merino-link" href="/profile/tutor/{{workshop.UserId}}">{{ workshop.Firstname }} {{ workshop.Familyname }}</a></td>
+        <td><div class="button-container">
+          {% if workshop.Date and workshop.Date >= current_date %}
+          <form
+          action="{{ url_for('workshop', workshopID=workshop.WorkshopID) }}"
+          method="post"
+          style="width: 100%;"
+          onsubmit="return confirm(`Are you sure you want to book this workshop?`);"
+        >
+          <button type="submit" class="btn btn-dark button-booking" >Book now!</button>
+        </form>
+
+          {% else %}
+          <button class="btn btn-dark button-booking">Unable to book</button>
+          {% endif %}</td> 
+        </div>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="3">No workshops found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <nav aria-label="Workshops pagination">
+    <ul class="pagination">
+      {% for i in range(1, total_pages + 1) %}
+      <li class="page-item {% if i == page %}active{% endif %}">
+        <a
+          class="page-link"
+          href="{{ url_for('book_workshop', page=i, search=request.args.get('search', '')) }}"
+          >{{ i }}</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+
+
+
+
+{% endblock %}

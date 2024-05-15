@@ -1,0 +1,47 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('view_tutorprofile') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Tutor Lessons Available</h2>
+
+  <!-- Lessons Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Lesson Name</th>
+        <th>Booking Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Location</th>
+        <th>Cost</th>
+        <th></th>
+        <!-- Empty header for the "book" button -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for lesson in tutor_lessons %}
+      <tr>
+        <td>{{ lesson[0] }}</td>
+        <td>{{ format_date(lesson[1], '%d/%m/%Y') }}</td>
+        <td>{{ lesson[2] }}</td>
+        <td>{{ lesson[3] }}</td>
+        <td>{{ lesson[4] }}</td>
+        <td>{{ lesson[5] }}</td>
+        <td>
+          <a
+            href="{{ url_for('lesson_details', lesson_id=lesson[6]) }}"
+            class="btn btn-sm btn-primary"
+            >View</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

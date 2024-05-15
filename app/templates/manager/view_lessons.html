@@ -1,0 +1,93 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('manager_dashboard') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>One-on-One Lessons</h2>
+  <!-- Search Form -->
+  <form class="d-flex my-4">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by title"
+      aria-label="Search"
+      name="search"
+      value="{{ request.args.get('search', '') }}"
+    />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+  <a href="{{ url_for('manager_add_lesson') }}" class="btn btn-outline-primary"
+    >Add Lesson schedule</a
+  >
+  <!-- Workshops Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Lesson ID</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
+        <th>Tutor</th>
+        <th>Cost</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lesson in lessons %}
+      <tr>
+        <td>{{ lesson.LessonID }}</td>
+        <td>{{ lesson.LessonType }}</td>
+        <td>{{ format_date(lesson.Date, '%d/%m/%Y') }}</td>
+
+        <td>{{ lesson.StartTime }} - {{ lesson.EndTime }}</td>
+        <td>{{ lesson.LocationName }}</td>
+        <td>{{ lesson.TutorFirstName }} {{ lesson.TutorFamilyName }}</td>
+        <td>${{ lesson.Cost}}</td>
+        <td>
+          <a
+            href="{{ url_for('manager_edit_lesson', lesson_id=lesson.LessonID) }}"
+            class="btn btn-sm btn-primary"
+            >Edit</a
+          >
+          <form
+            action="{{ url_for('delete_lesson', lesson_id=lesson.LessonID) }}"
+            method="post"
+            class="d-inline"
+            onsubmit="return confirm('Are you sure you want to delete this workshop?');"
+          >
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          <a
+            href="{{ url_for('view_attendance', session_type='lesson', session_id=lesson.LessonID) }}"
+            class="btn btn-sm btn-outline-primary"
+            >Attendace</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="3">No lessions found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <nav aria-label=" pagination">
+    <ul class="pagination">
+      {% for i in range(1, total_pages + 1) %}
+      <li class="page-item {% if i == page %}active{% endif %}">
+        <a
+          class="page-link"
+          href="{{ url_for('view_lessons', page=i, search=request.args.get('search', '')) }}"
+          >{{ i }}</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+
+{% endblock %}

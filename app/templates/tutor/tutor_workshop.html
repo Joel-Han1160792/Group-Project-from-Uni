@@ -1,0 +1,50 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <h2>My Workshops</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Location</th>
+        <th>Cost</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for workshop in workshops %}
+      <tr>
+        <td>{{ workshop.Title }}</td>
+        <td>{{ workshop.Date | format_date }}</td>
+        <td>{{ workshop.Time }}</td>
+        <td>{{ workshop.LocationName }}</td>
+        <td>${{ workshop.Cost }}</td>
+        <td>
+          <!-- <a
+            href="{{ url_for('edit_workshop', workshop_id=workshop.WorkshopID) }}"
+            class="btn btn-sm btn-primary"
+            >Edit</a
+          >
+          <a
+            href="{{ url_for('delete_workshop', workshop_id=workshop.WorkshopID) }}"
+            class="btn btn-sm btn-danger"
+            onclick="return confirm('Are you sure?');"
+            >Delete</a
+          > -->
+          <a
+            href="{{ url_for('view_attendance', session_type='workshop', session_id=workshop.WorkshopID) }}"
+            class="btn btn-sm btn-outline-primary"
+            >Attendance</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6">No workshops found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

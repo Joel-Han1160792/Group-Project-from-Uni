@@ -1,0 +1,65 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <a href="{{ url_for('view_workshops') }}" class="btn btn-light btn-sm">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+  <h2>Edit Workshop</h2>
+  <form action="" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{ workshop['Title'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="details" class="form-label">Details</label>
+      <textarea class="form-control" id="details" name="details" rows="3" required>{{ workshop['Details'] }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <!-- <input type="text" class="form-control" id="location" name="location" value="{{ workshop['Location'] }}" required> -->
+      <select class="form-select" id="location" name="location" required>
+        <option value="">Select Location</option>
+        {% for location in locations %}
+        <option value="{{ location[0] }}" {% if workshop.locationID == location[0] %} selected {% endif %}>
+          {{ location[1] }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ workshop['Date'] | format_date }}" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="time" class="form-label">Time</label>
+        <input type="time" class="form-control" id="time" name="time" value="{{ workshop['Time'] | format_time }}" required>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="cost" class="form-label">Cost</label>
+      <input type="text" class="form-control" id="cost" name="cost" value="{{ workshop['Cost'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="capacity" class="form-label">Capacity</label>
+      <input type="number" class="form-control" id="capacity" name="capacity" value="{{ workshop['Capacity'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="tutor_id" class="form-label">Tutor</label>
+      <select class="form-select" id="tutor_id" name="tutor_id" required>
+        <option value="">Select Tutor</option>
+        {% for tutor in tutors %}
+        <option value="{{ tutor.UserID }}" {% if tutor.UserID == workshop.TutorID %} selected {% endif %}>
+          {{ tutor.FullName }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Workshop</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div class="mb-4">
+    <a href= "{{ url_for('track_payment') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+
+<div class="container mt-4">
+  <h2>Details</h2>
+
+  <div class="mb-3">
+    <label for="payment_id" class="form-label">Payment ID</label>
+    <input type="text" class="form-control" id="payment_id" name="payment_id" value="{{ payment['PaymentID'] }}" readonly>
+  </div>
+
+  {% if payment['Type'] == 'Subscription' %}
+  <div class="mb-3">
+    <label for="subscription_type" class="form-label">Subscription Type</label>
+    <input type="text" class="form-control" id="subscription_type" name="subscription_type" value="{{ payment['SubscriptionType'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="start_date" class="form-label">Start Date</label>
+    <input type="text" class="form-control" id="start_date" name="start_date" value="{{ payment['StartDate'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="end_date" class="form-label">End Date</label>
+    <input type="text" class="form-control" id="end_date" name="end_date" value="{{ payment['EndDate'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="subscription_status" class="form-label">Subscription Status</label>
+    <input type="text" class="form-control" id="subscription_status" name="subscription_status" value="{{ payment['SubscriptionStatus'] }}" readonly>
+  </div>
+  {% elif payment['Type'] == 'Workshop' %}
+  <div class="mb-3">
+    <label for="workshop_title" class="form-label">Workshop Title</label>
+    <input type="text" class="form-control" id="workshop_title" name="workshop_title" value="{{ payment['WorkshopTitle'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text" class="form-control" id="location" name="location" value="{{ payment['Location'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input type="text" class="form-control" id="date" name="date" value="{{ payment['Date'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="time" class="form-label">Time</label>
+    <input type="text" class="form-control" id="time" name="time" value="{{ payment['Time'] }}" readonly>
+  </div>
+  {% elif payment['Type'] == 'Lesson' %}
+  <div class="mb-3">
+    <label for="lesson_type" class="form-label">Lesson Type</label>
+    <input type="text" class="form-control" id="lesson_type" name="lesson_type" value="{{ payment['LessonType'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">Date</label>
+    <input type="text" class="form-control" id="date" name="date" value="{{ payment['Date'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="start_time" class="form-label">Start Time</label>
+    <input type="text" class="form-control" id="start_time" name="start_time" value="{{ payment['StartTime'] }}" readonly>
+  </div>
+  <div class="mb-3">
+    <label for="end_time" class="form-label">End Time</label>
+    <input type="text" class="form-control" id="end_time" name="end_time" value="{{ payment['EndTime'] }}" readonly>
+  </div>
+  <!-- <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text" class="form-control" id="location" name="location" value="{{ payment['Location'] }}" readonly>
+  </div> -->
+  {% endif %}
+</div>
+
+{% endblock %}

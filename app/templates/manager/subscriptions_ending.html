@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>Member Subscriptions</h2>
+
+  <!-- Member Subscriptions Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Member ID</th>
+        <th>Member Name</th>
+        <th>Type of Subscription</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th> Status</th>
+        <th> Reminder</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="7">The subscriptions due soon：</td></tr>
+      {% for subscription in sub_endsoon %}
+      <tr>
+        <td>{{ subscription[7] }}</td>
+        <td>{{ subscription[0] }}</td>
+        <td>{{ subscription[2] }}</td>
+        <td>{{ format_date(subscription[5], '%d/%m/%Y') }}</td>
+        <td>{{ format_date(subscription[6], '%d/%m/%Y')}}</td>
+        <td>{{ subscription[9] }}</td>
+        <td><a href="/send/notification/{{subscription[1]}}">Send</a></td>
+      </tr>
+      {% endfor %}
+      <tr>
+      <td colspan="6"> The subscriptions expired last 60 days：</td>
+      </tr>
+      {% for subscription in sub_end %}
+      <tr>
+        <td>{{ subscription[7] }}</td>
+        <td>{{ subscription[0] }}</td>
+        <td>{{ subscription[2] }}</td>
+        <td>{{ format_date(subscription[5], '%d/%m/%Y') }}</td>
+        <td>{{ format_date(subscription[6], '%d/%m/%Y') }}</td>
+        <td>{{ subscription[9] }}</td>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

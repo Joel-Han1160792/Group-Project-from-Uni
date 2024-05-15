@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href= "{{ url_for('view_lessons') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Edit Lesson</h2>
+  <form method="post" onsubmit="return validateDate()">
+    <div class="mb-3">
+      <label for="date" class="form-label">Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="date"
+        name="date"
+        value="{{ lesson.Date }}"
+        required
+      />
+      <div id="date-error" class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label for="start_time" class="form-label">Start Time</label>
+      <input
+        type="time"
+        class="form-control"
+        id="start_time"
+        name="start_time"
+        value="{{ lesson.StartTime }}"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="end_time" class="form-label">End Time</label>
+      <input
+        type="time"
+        class="form-control"
+        id="end_time"
+        name="end_time"
+        value="{{ lesson.EndTime }}"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <select class="form-select" id="location" name="location" required>
+        <option value="">Select Location</option>
+        {% for location in locations %}
+        <option value="{{ location[0] }}" {% if  lesson.LocationID == location[0] %} selected {% endif %}>
+          {{ location[1] }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+        <label for="lesson_type" class="form-label">Lesson Type</label>
+        <select class="form-select" id="lesson_type" name="lesson_type" required>
+            <option value="">Select Lesson Type</option>
+            {% for lesson_type in lesson_types %}
+                <option value="{{ lesson_type.LessonTypeID }}" {% if lesson.LessonTypeID == lesson_type.LessonTypeID %}selected{% endif %}>{{ lesson_type.Name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="tutor" class="form-label">Tutor</label>
+        <select class="form-select" id="tutor" name="tutor" required>
+            <option value="">Select Tutor</option>
+            {% for tutor in tutors %}
+                <option value="{{ tutor.UserID }}" {% if lesson.TutorID == tutor.UserID %}selected{% endif %}>{{ tutor.TutorName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+      <label for="cost" class="form-label">Cost</label>
+      <input
+        type="number"
+        class="form-control"
+        id="cost"
+        name="cost"
+        value="{{ lesson.Cost }}"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="is_booked" class="form-label">Availability</label>
+      <select class="form-control" id="is_booked" name="is_booked" required>
+        <option value="0" {% if lesson.IsBooked == 0 %}selected{% endif %}>Available</option>
+        <option value="1" {% if lesson.IsBooked == 1 %}selected{% endif %}>Booked</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Lesson</button>
+  </form>
+</div>
+<script>
+  function validateDate() {
+      const dateInput = document.getElementById('date');
+      const dateError = document.getElementById('date-error');
+
+      // Get today's date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Get the selected date from the input
+      const selectedDate = new Date(dateInput.value);
+
+      // Compare the selected date with today's date
+      if (selectedDate < today) {
+          dateInput.classList.add('is-invalid');
+          dateError.textContent = 'Please select a date from today onwards.';
+          return false;
+      } else {
+          dateInput.classList.remove('is-invalid');
+          dateError.textContent = '';
+          return true;
+      }
+  }
+
+  document.querySelector('form').addEventListener('submit', (e) => {
+      if (!validateDate()) {
+          e.preventDefault(); // Prevent form submission if date is invalid
+      }
+  });
+</script>
+{% endblock %}

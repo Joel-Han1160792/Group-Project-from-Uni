@@ -1,0 +1,126 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <button onclick="history.back()" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+  <h2>Manage Session Attendance</h2>
+  <form method="POST" action="{{ url_for('record_attendance') }}">
+    {% if session.get('role') == 3 %}
+    <div class="mb-3">
+      <label for="tutor_id" class="form-label">Select Tutor:</label>
+      <select id="tutor_id" name="tutor_id" class="form-select mb-3">
+        <option value="">Select a Tutor</option>
+        {% for tutor in tutors %}
+        <option value="{{ tutor.UserID }}">{{ tutor.FullName }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+    <!-- Dropdown for selecting session type -->
+    <div class="mb-3">
+      <label for="sessionType" class="form-label">Session Type:</label>
+      <select
+        id="sessionType"
+        name="sessionType"
+        class="form-select mb-3"
+        onchange="loadSessions(this.value)"
+      >
+        <option value="">Select Lessons or Workshops</option>
+        <option value="lesson">Lessons</option>
+        <option value="workshop">Workshops</option>
+      </select>
+    </div>
+
+    <!-- Dropdown for selecting specific sessions -->
+    <div class="mb-3">
+      <label for="session" class="form-label">Select Session:</label>
+      <select
+        id="session"
+        name="session"
+        class="form-select mb-3"
+        onchange="loadParticipants()"
+      >
+        <option value="">Select a session...</option>
+      </select>
+    </div>
+
+    <!-- Participant list table -->
+    <table class="table" id="participantList">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Attended</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Mark Attendance</button>
+  </form>
+</div>
+
+<script>
+  var role = {{ session.get('role', 'none')|tojson }};
+  var tutorId = {{ session.get('id', 'none')|tojson }};
+
+  function loadSessions(sessionType) {
+    var selectedTutorId = (role === 3) ? document.getElementById("tutor_id").value : tutorId;
+
+    fetch(`/get_sessions/${sessionType}/${selectedTutorId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        let sessionSelect = document.getElementById("session");
+        sessionSelect.innerHTML =
+          '<option value="">Select a session...</option>';
+        data.forEach((session) => {
+          let option = new Option(session.name, session.id);
+          sessionSelect.add(option);
+        });
+      });
+    // Clear participant list when new sessions are loaded
+    let tbody = document
+          .getElementById("participantList")
+          .querySelector("tbody");
+        tbody.innerHTML = ""; // Clear previous entries
+  }
+
+  function loadParticipants() {
+    let sessionId = document.getElementById("session").value;
+    let sessionType = document.getElementById("sessionType").value;
+
+    if (!sessionId) {
+    let participantList = document.getElementById("participantList");
+    participantList.innerHTML = ""; // Clear previous entries if no session selected
+    return; // Exit the function if no session is selected
+  }
+
+    fetch(`/get_participants/${sessionType}/${sessionId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        let tbody = document
+          .getElementById("participantList")
+          .querySelector("tbody");
+        tbody.innerHTML = ""; // Clear previous entries
+        data.forEach((participant) => {
+          let row = tbody.insertRow();
+          let nameCell = row.insertCell();
+          nameCell.textContent = `${participant.FirstName} ${participant.FamilyName}`;
+
+          let emailCell = row.insertCell();
+          emailCell.textContent = participant.Email;
+
+          let attendedCell = row.insertCell();
+          let input = document.createElement("input");
+          input.type = "checkbox";
+          input.name = "attended[]";
+          input.value = participant.UserID;
+          input.checked = participant.Attended;
+          attendedCell.appendChild(input);
+        });
+      });
+  }
+</script>
+{% endblock %}

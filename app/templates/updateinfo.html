@@ -1,0 +1,183 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="container mt-4">
+  <div class="mb-4">
+    {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+    'manager_dashboard' } %} {% set current_back_urls =
+    back_urls[session.get('role')] %}
+    <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+    <form class="info-update"    action="{% if role == 'tutor' %}{{ url_for('update_info_tutor', tutorID=tutorID) }}{% else %}{{ form_action }}{% endif %}"  method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <div>{{msg}}</div>
+      
+          <label for="title" class="form-label">Title</label>
+          <select id="title" name="title" class="form-control" required>
+              <option value="" {% if not tutor and not manager and not member %} selected {% endif %}>
+                  Please select your title
+              </option>
+              <option value="Mr." {% if (tutor and tutor[1] == 'Mr.') or (manager and manager[1] == 'Mr.') or (member and member[1] == 'Mr.') %} selected {% endif %}>Mr.</option>
+              <option value="Mrs." {% if (tutor and tutor[1] == 'Mrs.') or (manager and manager[1] == 'Mrs.') or (member and member[1] == 'Mrs.') %} selected {% endif %}>Mrs.</option>
+              <option value="Ms." {% if (tutor and tutor[1] == 'Ms.') or (manager and manager[1] == 'Ms.') or (member and member[1] == 'Ms.') %} selected {% endif %}>Ms.</option>
+              <option value="Miss" {% if (tutor and tutor[1] == 'Miss') or (manager and manager[1] == 'Miss') or (member and member[1] == 'Miss') %} selected {% endif %}>Miss</option>
+              <option value="Mx." {% if (tutor and tutor[1] == 'Mx.') or (manager and manager[1] == 'Mx.') or (member and member[1] == 'Mx.') %} selected {% endif %}>Mx.</option>
+              <option value="Dr." {% if (tutor and tutor[1] == 'Dr.') or (manager and manager[1] == 'Dr.') or (member and member[1] == 'Dr.') %} selected {% endif %}>Dr.</option>
+              <option value="Prof." {% if (tutor and tutor[1] == 'Prof.') or (manager and manager[1] == 'Prof.') or (member and member[1] == 'Prof.') %} selected {% endif %}>Prof.</option>
+          </select>
+          <div class="invalid-feedback">
+              Please choose a title.
+          </div>
+      </div>
+      
+
+
+      <div class="mb-3">
+        <label for="firstname" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstname"
+          name="firstname"
+        {% if tutor is defined %}
+          Value="{{ tutor[2] }}"
+      {% elif member is defined %}
+          Value="{{ member[2] }}"
+      {% else %}
+          Value="{{ manager[2] }}"
+      {% endif %}
+        />
+      </div>
+      <div class="mb-3">
+        <label for="familyname" class="form-label">Family Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="familyname"
+          name="familyname"
+          {% if tutor is defined %}
+          Value="{{ tutor[3] }}"
+      {% elif member is defined %}
+          Value="{{ member[3] }}"
+      {% else %}
+          Value="{{ manager[3] }}"
+      {% endif %}
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="position" class="form-label">Position</label>
+        <input
+          type="text"
+          class="form-control"
+          id="position"
+          name="position"
+          {% if tutor is defined %}
+          Value="{{ tutor[4] }}"
+      {% elif member is defined %}
+          Value="{{ member[4] }}"
+      {% else %}
+          Value="{{ manager[4] }}"
+      {% endif %}
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="phonenumber" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="phonenumber"
+          name="phonenumber"
+          {% if tutor is defined %}
+          Value="{{ tutor[5] }}"
+      {% elif member is defined %}
+          Value="{{ member[5] }}"
+      {% else %}
+          Value="{{ manager[5] }}"
+      {% endif %}
+        />
+      </div>
+
+ 
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          {% if tutor is defined %}
+          Value="{{ tutor[6] }}"
+      {% elif member is defined %}
+          Value="{{ member[6] }}"
+      {% else %}
+          Value="{{ manager[6] }}"
+      {% endif %}
+        />
+      </div>
+<!-- show below if inputs when opened by a tutor -->
+{% if form_action == '/update/info/tutor' %}
+<div class="mb-3">
+  <label for="profile" class="form-label">Tutor Profile</label>
+ 
+  <textarea id="profile" 
+    name="profile" 
+    rows="4" cols="33" 
+    placeholder="Enter your profile introduction here..."
+    ></textarea>
+  
+</div>
+
+{% endif %}
+
+
+
+
+
+<!-- show below inputs when opened by a member -->
+  {% if form_action == '/update/info/member' %}
+      <div class="mb-3">
+        <label for="address" class="form-label">Your current address</label>
+        <br>
+        <textarea id="address" 
+          name="address"
+          rows="3" cols="33"
+          placeholder="Enter your address">{{member[7]}}</textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="DoB" class="form-label">Date of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          id="DoB"
+          name="DoB"
+          max="2008-12-31"
+          min="1934-12-31"
+          value="{{member[8]}}"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="breeding" class="form-label">Merino breeding details</label>
+       <br>
+        <textarea id="breeding" 
+          name="breeding" 
+          rows="3" cols="33" 
+          placeholder="Enter your Merino breeding details here..."></textarea>
+         </div>
+
+ 
+
+      {% endif %}
+      
+   <div class="button-container">
+      <button type="submit" class="btn btn-primary mb-3">Update</button></div>
+    
+</form>
+{% endblock %}

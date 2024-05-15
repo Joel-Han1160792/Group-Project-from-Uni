@@ -1,0 +1,56 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <button onclick="history.back()" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+  <h2 class="mb-3">Tutor Details</h2>
+
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">Profile Details</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <strong>Whole Name:</strong> {{ profile[1] }}{{ profile[2] }}{{
+        profile[3] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Position:</strong> {{ profile[4] }}
+      </li>
+
+      <li class="list-group-item"><strong>Phone:</strong> {{ profile[5] }}</li>
+      <li class="list-group-item"><strong>Email:</strong> {{ profile[6] }}</li>
+      <li class="list-group-item">
+        <strong>Profile:</strong> {{ profile[7] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Profile Image:</strong>
+        <div class="" style="width: 300px">
+          <img
+            src="/static/images/tutors/{{profile[8]}}"
+            class="card-img-top"
+            alt="{{profile[2]}} {{profile[3]}}"
+          />
+        </div>
+      </li>
+      {% if session.get('role') in [2, 3] %}
+      <li class="list-group-item">
+        <a
+          href="{{url_for('update_info_tutor', tutorID=profile[0])}}"
+          class="btn btn-primary btn-lg custom-link"
+          >Update Your Information</a
+        >
+      </li>
+      <li class="list-group-item">
+        <a
+          href="/tutor/image/{{profile[0]}}"
+          class="btn btn-primary btn-lg custom-link"
+          >Upload A Profile Image</a
+        >
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

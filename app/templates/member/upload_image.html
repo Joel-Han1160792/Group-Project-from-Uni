@@ -1,0 +1,26 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="container mt-4">
+  <div class="mb-4">
+    {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+    'manager_dashboard' } %} {% set current_back_urls =
+    back_urls[session.get('role')] %}
+    <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+</div>
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+<form class="loginForm" action="{{url_for('upload_image', userID = userID)}}" method="post" enctype="multipart/form-data">
+
+    
+   <div class="mb-3">
+        <label for="photo" class="form-label">Upload Photo</label>
+        <input type="file" name = "photo"/>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+   
+    </form>
+  </div>
+
+{% endblock %}

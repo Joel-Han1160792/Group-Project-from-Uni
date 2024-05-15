@@ -1,0 +1,80 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="container mt-5">
+  <div class="mb-4">
+    <a href="{{ url_for('manager_dashboard') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="mb-4">Add Workshop</h2>
+      <form method="post">
+        <div class="mb-3">
+          <input
+            type="text"
+            name="title"
+            class="form-control"
+            placeholder="Title"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <textarea
+            name="details"
+            class="form-control"
+            placeholder="Details"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <select class="form-select" id="location" name="location" required>
+            <option value="">Select Location</option>
+            {% for location in locations %}
+            <option value="{{ location[0] }}">{{ location[1] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input type="date" name="date" class="form-control" required />
+          </div>
+          <div class="col-md-6 mb-3">
+            <input type="time" name="time" class="form-control" required />
+          </div>
+        </div>
+        <div class="mb-3">
+          <input
+            type="text"
+            name="cost"
+            class="form-control"
+            placeholder="Cost"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <input
+            type="number"
+            name="capacity"
+            class="form-control"
+            placeholder="Capacity"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <select name="tutor_id" class="form-select" required>
+            <option value="">Select Tutor</option>
+            {% for tutor in tutors %}
+            <option value="{{ tutor['UserID'] }}">{{ tutor.FullName }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Workshop</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

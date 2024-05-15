@@ -1,0 +1,39 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+
+<div class="herobanner">
+  <div class="loginContainer">
+    <div class="fw-lighter slogon">Exploring The World Of Merino Sheep</div>
+    <form class="loginForm" action="/login/" method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="username"
+          name="username"
+          placeholder="Username"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Password"
+        />
+      </div>
+      <!-- <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <div class="text-danger form-label"><h5>{{msg}}</h5></div>
+      <button type="submit" class="mb-3 btn btn-dark">Login</button>
+      <div >Don't have an account? <a href="{{url_for('register')}}" class="form-label">Register</a></div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

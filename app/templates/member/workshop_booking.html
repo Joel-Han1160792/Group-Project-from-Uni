@@ -1,0 +1,62 @@
+{% extends "layout.html" %} 
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+  <h2 class="mb-3">Workshop Details</h2>
+
+
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">Workshop Details</div>
+    <ul class="list-group list-group-flush">
+
+      <li class="list-group-item">
+        <strong>Location:</strong> {{ workshop[2] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Date:</strong> {{ format_date(workshop[3],'%d/%m/%Y')  }}
+      </li>
+ 
+      <li class="list-group-item">
+        <strong>Time:</strong> {{ workshop[4] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Cost:</strong> {{  workshop[5]  }}
+      </li>
+      <li class="list-group-item">
+        <strong>Capacity:</strong> {{  workshop[6]  }}
+      </li>
+      <li class="list-group-item">
+        <strong>Tutor:</strong> {{  workshop[8] }} {{ workshop[9] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Detail:</strong> {{ workshop[1] }}
+      </li>
+      
+      
+     
+    </ul>
+    
+  </div>
+
+
+</div>
+
+<!-- <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="check-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+  </symbol>
+  
+
+</svg>
+<div class="alert alert-success d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"></use></svg>
+  <div>
+  You have successfuly booked this workshop
+  </div>
+</div> -->
+
+{% endblock %}
+

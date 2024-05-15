@@ -1,0 +1,36 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container">
+  <div class="mb-4">
+    <a href="{{ url_for('list_lesson_types') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Edit Lesson Type</h2>
+  <form method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="{{ lesson_type.Name }}"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        rows="3"
+        required
+      >
+{{ lesson_type.Description }}</textarea
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">Update Lesson Type</button>
+  </form>
+</div>
+{% endblock %}

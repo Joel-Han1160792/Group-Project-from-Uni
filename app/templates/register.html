@@ -1,0 +1,215 @@
+{% extends 'layout.html' %} {% block title %}Register{% endblock %} {% block
+content%}
+<div class="container">
+  <div class="row gx-0 my-4">
+    <div class="col-md-5 d-sm-none d-md-block">
+      <img
+        src="/static/images/register.jpg"
+        class="registerImg"
+        alt="Register banner"
+      />
+    </div>
+    <div class="col-md-7">
+      <form class="registerForm needs-validation" action="/registerpayment" method="post" novalidate enctype="multipart/form-data">
+        <h2 class="mb-2">Sign up</h2>
+
+        <div class="mb-3">
+          Already have an account?
+          <a href="{{url_for('login')}}" class="form-label">Login</a>
+        </div>
+
+        <div class="text-danger form-label"><h5>{{msg}}</h5></div>
+        <div class="mt-1 row g-3">
+          <div class="col-md-6">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required >
+            <div class="invalid-feedback">
+              Please choose a username.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[A-Z]).{8,}" required >
+            <button class="btn btn-outline-light" type="button" id="togglePassword">
+              <i class="fas fa-eye" id="eyeIcon"></i>
+            </button>
+            </div>
+            <div class="invalid-feedback">
+              Password must be at least 8 characters long and contain at least one digit and one uppercase letter.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="title" class="form-label">Title</label>
+            <select id="title" name="title" class="form-control" required>
+              <option value="" selected disabled>
+                Please select your title
+              </option>
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Ms.">Ms.</option>
+              <option value="Miss">Miss</option>
+              <option value="Mx.">Mx.</option>
+              <option value="Dr.">Dr.</option>
+              <option value="Prof.">Prof.</option>
+            </select>
+            <div class="invalid-feedback">
+              Please choose a title.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="firstname" class="form-label">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstname"
+              name="firstname"
+              placeholder="First Name"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide your first name.
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="familyname" class="form-label">Family Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="familyname"
+              name="familyname"
+              placeholder="Famliy Name"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide your family name.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="position" class="form-label">Position</label>
+            <input
+              type="text"
+              class="form-control"
+              id="position"
+              name="position"
+              placeholder="position"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide your position.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="phonenumber" class="form-label">Phone Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="phonenumber"
+              name="phonenumber"
+              placeholder="Phone Number"
+              minlength="9"
+              maxlength="11"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide a valid phone number between 9 to 11 digits.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Email Address"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide a valid email address.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="address" class="form-label">Address</label>
+            <input
+              type="text"
+              id="address"
+              class="form-control"
+              name="address"
+              placeholder="Enter your address details here..."
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide a valid address.
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="DoB" class="form-label">Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              id="DoB"
+              name="DoB"
+              max="2008-12-31"
+              min="1934-12-31"
+              required
+            />
+            <div class="invalid-feedback">
+              Please provide your date of birth.
+            </div>
+          </div>
+<!--
+          <div class="col-md-6">
+            <label for="image" class="form-label">Profile Image (Optional) </label>
+            <input type="file" class="form-control" name="image" accept="image/png, image/gif, image/jpeg" />
+          </div>
+
+          <div class="mb-3">
+            <label for="detail" class="form-label">Merino Breeding Details (Optional)</label>
+            <textarea  class="form-control" name="detail" rows="5"  maxlength="1000" ></textarea>
+          </div>
+-->
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success d-block">
+              Next
+            </button>
+          </div>
+
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var togglePassword = document.getElementById('togglePassword');
+    var passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function () {
+        var eyeIcon = document.getElementById('eyeIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    });
+});
+</script>
+
+
+{% endblock %}

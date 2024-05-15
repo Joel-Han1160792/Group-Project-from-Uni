@@ -1,0 +1,48 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="container mt-4">
+    <div class="mb-4">
+      {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+      'manager_dashboard' } %} {% set current_back_urls =
+      back_urls[session.get('role')] %}
+      <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+    </div>
+
+<div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+<form class="loginForm " action="/update/password" method="post">
+  <div class="mb-3 position-relative">
+      <label for="currentpwd" class="form-label">Current Password</label>
+      <input type="password" class="form-control" id="currentpwd" name="currentpwd" placeholder="Please input your current password" required>
+      <i class="fas fa-eye password-icon" onclick="togglePasswordVisibility('currentpwd')"></i>
+  </div>
+  <div class="mb-3 position-relative">
+      <label for="newpwd" class="form-label">New Password</label>
+      <input type="password" class="form-control" id="newpwd" name="newpwd" placeholder="Please input your new password" required>
+      <i class="fas fa-eye password-icon" onclick="togglePasswordVisibility('newpwd')"></i>
+  </div>
+  <div class="mb-3 position-relative">
+      <label for="pwd_check" class="form-label">Password Check</label>
+      <input type="password" class="form-control" id="pwd_check" name="pwd_check" placeholder="Please input new password again" required>
+      <i class="fas fa-eye password-icon" onclick="togglePasswordVisibility('pwd_check')"></i>
+  </div>
+  <div>{{ msg }}</div>
+  <button type="submit" class="btn btn-dark">Submit</button>
+</form>
+</div>
+<script>
+  function togglePasswordVisibility(fieldId) {
+      var input = document.getElementById(fieldId);
+      if (input.type === "password") {
+          input.type = "text";
+      } else {
+          input.type = "password";
+      }
+  }
+  </script>
+  
+
+
+{% endblock %}
+

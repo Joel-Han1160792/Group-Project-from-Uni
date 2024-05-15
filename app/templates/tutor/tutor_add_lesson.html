@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('tutor_manage_lesson') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Add Lesson</h2>
+  <form method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Lesson Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Date</label>
+      <input type="date" class="form-control" id="date" name="date" required>
+      <div id="date-error" class="invalid-feedback"></div>
+    </div>
+    <div class="mb-3">
+      <label for="start_time" class="form-label">Start Time</label>
+      <input type="time" class="form-control" id="start_time" name="start_time" required>
+    </div>
+    <div class="mb-3">
+      <label for="end_time" class="form-label">End Time</label>
+      <input type="time" class="form-control" id="end_time" name="end_time" required>
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" class="form-control" id="location" name="location" required>
+    </div>
+    <div class="mb-3">
+      <label for="cost" class="form-label">Cost</label>
+      <input type="number" class="form-control" id="cost" name="cost" required>
+    </div>
+    <div class="mb-3">
+      <label for="is_booked" class="form-label">Availability</label>
+      <select class="form-control" id="is_booked" name="is_booked" required>
+        <option value="0">Available</option>
+        <option value="1">Booked</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Lesson</button>
+  </form>
+</div>
+
+<script>
+    function validateDate() {
+        const dateInput = document.getElementById('date');
+        const dateError = document.getElementById('date-error');
+
+        // Get today's date
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Get the selected date from the input
+        const selectedDate = new Date(dateInput.value);
+
+        // Compare the selected date with today's date
+        if (selectedDate < today) {
+            dateInput.classList.add('is-invalid');
+            dateError.textContent = 'Please select a date from today onwards.';
+            return false;
+        } else {
+            dateInput.classList.remove('is-invalid');
+            dateError.textContent = '';
+            return true;
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', (e) => {
+        if (!validateDate()) {
+            e.preventDefault(); // Prevent form submission if date is invalid
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('news') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Edit News</h2>
+
+  <form action="{{ url_for('editnews', id = news[0]) }}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" name="title" required value="{{news[1]}}" />
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="form-label">News</label>
+      <textarea  class="form-control" id="news" name="news" rows="15" required >{{news[2]}}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+{% endblock %}

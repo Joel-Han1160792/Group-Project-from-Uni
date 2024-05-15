@@ -1,0 +1,36 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    
+        <div class="email-body">
+            <p>Dear {{title}} {{first_name}} {{family_name}} </p>
+    
+            <p>I hope this message finds you well. As the manager of Merino, it is important for me to ensure that you continue to receive the quality service you have come to expect from us.</p>
+    
+            <p><strong>I wanted to personally remind you that your subscription with us is nearing its expiration date.</strong> To maintain uninterrupted access to our services, we kindly request that you renew your subscription before this date.</p>
+    
+            <p>Renewing your subscription is easy and only takes a few minutes. You can complete the renewal process through your account dashboard on our website or contact our customer service team for assistance.</p>
+    
+            <p>If your subscription lapses, unfortunately, you will lose access to the services and benefits that are currently available to you as a valued subscriber. We highly value your continued patronage and would be disappointed to see you miss out on the resources and support we offer.</p>
+    
+            <p>Should you have any questions or require further information, please do not hesitate to reach out. Our team is on hand to provide you with the necessary assistance to ensure a smooth and hassle-free renewal process.</p>
+    
+            <p>Thank you for choosing Merino. We look forward to continuing to serve you.</p>
+    
+            <div class="email-footer">
+                Warm regards,<br>
+                Admin Team<br>
+             
+            </div>
+        </div>
+   <br>
+   <br>
+    <form action="/reminder" method="POST">
+        <div class="read-button">
+        <button type="submit">I have read </button>
+        </div>
+    </form>
+    
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('my_bookings') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2 class="mb-3">Booking Details</h2>
+
+  <div class="card">
+    <div class="card-header">Booking Information</div>
+    <div class="card-body">
+      <h5 class="card-title">Booking ID: {{ booking.BookingID }}</h5>
+      <p class="card-text"><strong>Status:</strong> {{ booking.Status }}</p>
+      <p class="card-text">
+        <strong>Booking Date:</strong> {{ booking.BookingDate | format_date }}
+      </p>
+    </div>
+  </div>
+
+  {% if details.Type == 'Workshop' %}
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">Workshop Details</div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <strong>Title:</strong> {{ details.Title }}
+      </li>
+      <li class="list-group-item">
+        <strong>Details:</strong> {{ details.Details }}
+      </li>
+      <li class="list-group-item">
+        <strong>Location:</strong> {{ details.Location }}
+      </li>
+      <li class="list-group-item">
+        <strong>Date:</strong> {{ details.Date | format_date }}
+      </li>
+      <li class="list-group-item"><strong>Time:</strong> {{ details.Time }}</li>
+      <li class="list-group-item">
+        <strong>Cost:</strong> ${{ details.Cost }}
+      </li>
+    </ul>
+  </div>
+  {% elif details.Type == 'One-on-One Lesson' %}
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">
+      One-on-One Lesson Details
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <strong>Lesson Type:</strong> {{ details.LessonType }}
+      </li>
+      <li class="list-group-item">
+        <strong>Description:</strong> {{ details.Description }}
+      </li>
+      <li class="list-group-item">
+        <strong>Date:</strong> {{ details.Date | format_date }}
+      </li>
+      <li class="list-group-item">
+        <strong>Start Time:</strong> {{ details.StartTime }}
+      </li>
+      <li class="list-group-item">
+        <strong>End Time:</strong> {{ details.EndTime }}
+      </li>
+      <li class="list-group-item">
+        <strong>Location:</strong> {{ details.Location }}
+      </li>
+      <li class="list-group-item">
+        <strong>Cost:</strong> ${{ details.Cost }}
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="mt-4">
+    <form
+      action="{{ url_for('cancel_booking', booking_id=booking.BookingID) }}"
+      method="post"
+      onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+    >
+      <button type="submit" class="btn btn-danger">Cancel Booking</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

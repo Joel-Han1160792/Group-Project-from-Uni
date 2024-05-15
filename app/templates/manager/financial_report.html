@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Financial Report for {{ year }}</h2>
+  <div class="mb-3">
+    <label for="yearSelect" class="form-label">Select Year:</label>
+    <select id="yearSelect" class="form-select" onchange="loadFinancialData(this.value)">
+      {% for y in range(2020, 2026) %}
+      <option value="{{ y }}" {{ 'selected' if y|string == year|string else '' }}>{{ y }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <h3>Annual Total Revenue </h3>
+        <p id="annualTotalRevenue">Total Revenue for the Year: $<span id="annualTotal">0</span></p>
+        <canvas id="annualRevenueChart"></canvas>
+      </div>
+    <div class="col-md-12 mt-4">
+      <h3>Monthly Revenue Breakdown</h3>
+      <canvas id="monthlyRevenueChart"></canvas>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let monthlyRevenueChart;
+  let annualRevenueChart;
+  function loadFinancialData(year) {
+    fetch(`/financial_report_data?year=${year}`)
+      .then(response => response.json())
+      .then(data => {
+        updateMonthlyRevenueChart(data.monthly);
+        updateAnnualRevenueChart(data.annual_by_type);
+        document.getElementById('annualTotal').textContent = data.annual_total.toLocaleString();
+      });
+  }
+
+  function updateMonthlyRevenueChart(monthlyData) {
+    const ctx = document.getElementById('monthlyRevenueChart').getContext('2d');
+    // If a chart instance exists, destroy it to ensure we can recreate it fresh
+    if (monthlyRevenueChart instanceof Chart) {
+        monthlyRevenueChart.destroy();
+    }
+    monthlyRevenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: monthlyData.map(item => item.Month),
+            datasets: [{
+                label: 'Subscriptions',
+                data: monthlyData.map(item => item.Subscriptions),
+                backgroundColor: 'rgba(255, 99, 132, 0.5)'
+            }, {
+                label: 'Workshops',
+                data: monthlyData.map(item => item.Workshops),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            }, {
+                label: 'Lessons',
+                data: monthlyData.map(item => item.Lessons),
+                backgroundColor: 'rgba(75, 192, 192, 0.5)'
+            }]
+        }
+    });
+  }
+
+  function updateAnnualRevenueChart(data) {
+    const ctx = document.getElementById('annualRevenueChart').getContext('2d');
+    // If a chart instance exists, destroy it to ensure we can recreate it fresh
+    if (annualRevenueChart instanceof Chart) {
+        annualRevenueChart.destroy();
+    }
+
+    annualRevenueChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Subscriptions', 'Workshops', 'Lessons'],
+            datasets: [{
+                label: 'Revenue by Type for the Year',
+                data: [data['Subscription'], data['Workshop'], data['Lesson']],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)', // Semi-transparent red
+                    'rgba(54, 162, 235, 0.5)', // Semi-transparent blue
+                    'rgba(75, 192, 192, 0.5)'  // Semi-transparent green
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 1)', 
+                    'rgba(75, 192, 192, 0.8)', 
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': $' + tooltipItem.raw.toLocaleString();
+                        }
+                    }
+                }
+            }
+        }
+    });
+  }
+
+  // Initial load
+  loadFinancialData({{ year }});
+</script>
+{% endblock %}

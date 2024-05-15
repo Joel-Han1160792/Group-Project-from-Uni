@@ -1,0 +1,134 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-4">
+  <h2>Attendance Reports</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Overall Attendance</h4>
+      <canvas id="overallAttendanceChart"></canvas>
+    </div>
+    <div class="col-md-6">
+      <h4>Individual Attendance</h4>
+      <select
+        id="memberSelect"
+        class="form-select"
+        onchange="loadIndividualAttendance()"
+      >
+        <option value="">Select a Member</option>
+      </select>
+      <canvas id="individualAttendanceChart"></canvas>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let overallAttendanceChart;
+  let individualAttendanceChart;
+
+  function loadOverallAttendance() {
+    fetch("/overall_attendance")
+      .then((response) => response.json())
+      .then((data) => {
+        const ctx = document
+          .getElementById("overallAttendanceChart")
+          .getContext("2d");
+        if (overallAttendanceChart) {
+          overallAttendanceChart.destroy(); // Destroy the existing chart
+        }
+        overallAttendanceChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: data.map((item) => item.FullName),
+            datasets: [
+              {
+                label: "Total Attendance",
+                data: data.map((item) => item.TotalAttendance),
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+  }
+  function loadMembers() {
+    fetch("/get_members")
+      .then((response) => response.json())
+      .then((data) => {
+        const select = document.getElementById("memberSelect");
+        data.forEach((member) => {
+          const option = new Option(member.FullName, member.UserID);
+          select.add(option);
+        });
+      });
+  }
+  function loadIndividualAttendance() {
+    const member_id = document.getElementById("memberSelect").value;
+    fetch(`/individual_attendance/${member_id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const ctx = document
+          .getElementById("individualAttendanceChart")
+          .getContext("2d");
+
+        // Destroy the existing chart if it exists
+        if (individualAttendanceChart) {
+          individualAttendanceChart.destroy();
+        }
+
+        // Calculate attendance stats
+        const attendanceStats = data.reduce(
+          (acc, record) => {
+            if (record.Attended) {
+              acc.attended += 1;
+            } else {
+              acc.absent += 1;
+            }
+            return acc;
+          },
+          { attended: 0, absent: 0 }
+        );
+
+        // Create a new doughnut chart
+        individualAttendanceChart = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: ["Attended", "Absent"],
+            datasets: [
+              {
+                label: "Attendance Record",
+                data: [attendanceStats.attended, attendanceStats.absent],
+                backgroundColor: [
+                  "rgba(75, 192, 192, 0.8)", // Green for attended
+                  "rgba(255, 99, 132, 0.8)" // Red for absent
+                ],
+                borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top"
+              }
+            }
+          }
+        });
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    loadOverallAttendance();
+    loadMembers();
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <h2>My Lesson Bookings</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Lesson ID</th>
+        <th>Lesson Type</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Member Name</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.LessonID }}</td>
+        <td>{{ booking.LessonType }}</td>
+        <td>{{ format_date(booking.Date, '%d/%m/%Y') }}</td>
+        <td>{{ booking.StartTime }}</td>
+        <td>{{ booking.EndTime }}</td>
+        <td>{{ booking.FirstName }} {{ booking.FamilyName }}</td>
+        <td>{{ booking.Status }}</td>
+        <td>
+          <a
+            href="{{ url_for('lesson_booking_details', booking_id=booking.BookingID) }}"
+            class="btn btn-sm btn-primary"
+            >View</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7">No bookings found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

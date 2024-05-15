@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2>Member Subscriptions</h2>
+
+  <!-- Search Form -->
+  <form class="d-flex my-4">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by member name"
+      aria-label="Search"
+      name="search"
+      value="{{ search_query }}"
+    />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+
+  <!-- Member Subscriptions Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Member ID</th>
+        <th>Member Name</th>
+        <th>Type of Subscription</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Subscription Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subscription in member_subscriptions %}
+      <tr>
+        <td>{{ subscription[0] }}</td>
+        <td>{{ subscription[1] }}</td>
+        <td>{{ subscription[2] }}</td>
+        <td>{{ format_date(subscription[3], '%d/%m/%Y') }}</td>
+        <td>{{ format_date(subscription[4], '%d/%m/%Y') }}</td>
+        <td>{{ subscription[5] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

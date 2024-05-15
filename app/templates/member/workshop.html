@@ -1,0 +1,38 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-3">Workshop Details</h2>
+
+
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">Workshop Details</div>
+    <ul class="list-group list-group-flush">
+    
+      <li class="list-group-item">
+        <strong>Location:</strong> {{ workshop[2] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Date:</strong> {{  workshop[3]  }}
+      </li>
+ 
+      <li class="list-group-item">
+        <strong>Time:</strong> {{ workshop[4] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Cost:</strong> {{  workshop[5]  }}
+      </li>
+      <li class="list-group-item">
+        <strong>Capacity:</strong> {{  workshop[6]  }}
+      </li>
+      <li class="list-group-item">
+        <strong>Tutor:</strong> {{  workshop[8] }} {{ workshop[9] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Detail:</strong> {{ workshop[1] }}
+      </li>
+    </ul>
+  </div>
+
+
+</div>
+{% endblock %}

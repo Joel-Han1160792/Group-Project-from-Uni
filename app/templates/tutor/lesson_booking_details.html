@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="mb-4">
+        <a href="{{ url_for('lesson_bookings') }}" class="btn btn-light btn-sm">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+    <div class="row">
+        <!-- Booking Details Card -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-custom-primary text-white">
+                    One-on-One Lesson Booking Details
+                </div>
+                <div class="card-body">
+                    <h5 class="mb-4">Lesson and Booking Information</h5>
+                    <dl class="row">
+                        <dt class="col-sm-4">Lesson Type:</dt>
+                        <dd class="col-sm-8">{{ booking.LessonType }}</dd>
+                        
+                        <dt class="col-sm-4">Description:</dt>
+                        <dd class="col-sm-8">{{ booking.Description }}</dd>
+                        
+                        <dt class="col-sm-4">Date:</dt>
+                        <dd class="col-sm-8">{{ format_date(booking.Date, '%d/%m/%Y')}}</dd>
+                        
+                        <dt class="col-sm-4">Start Time:</dt>
+                        <dd class="col-sm-8">{{ booking.StartTime }}</dd>
+                        
+                        <dt class="col-sm-4">End Time:</dt>
+                        <dd class="col-sm-8">{{ booking.EndTime }}</dd>
+                        
+                        <dt class="col-sm-4">Location:</dt>
+                        <dd class="col-sm-8">{{ booking.Location }}</dd>
+                        
+                        <dt class="col-sm-4">Cost:</dt>
+                        <dd class="col-sm-8">{{ booking.Cost }}</dd>
+                        
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">{{ booking.Status }}</dd>
+                    </dl>
+                    <hr>
+                    <h5 class="mb-3">Update Status and Note</h5>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="Confirmed" {% if booking.Status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="Cancelled" {% if booking.Status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <textarea class="form-control" id="note" name="note" rows="3" >{{ booking.Note }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member Details Section -->
+        <div class="col-lg-4">
+            <div class="card">
+                <img src="{{ booking.ProfileImage }}" class="card-img-top img-fluid rounded-circle mx-auto mt-3" alt="Member Profile Image" style="width: 140px; height: 140px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ booking.Title }} {{ booking.FirstName }} {{ booking.FamilyName }}</h5>
+                    <p class="card-text">
+                        <strong>Email:</strong> {{ booking.Email }}<br>
+                        <strong>Phone:</strong> {{ booking.PhoneNumber }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

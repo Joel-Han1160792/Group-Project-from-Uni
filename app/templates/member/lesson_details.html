@@ -1,0 +1,77 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    <button onclick="history.back()" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+  <h2>One On One Lesson Details</h2>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Title: {{ lesson.LessonType }}</h5>
+          <p class="card-text">
+            <strong>Description:</strong> {{ lesson.Description }}
+          </p>
+          <p class="card-text"><strong>Date:</strong> {{ format_date(lesson.Date, '%d/%m/%Y') }}</p>
+          <p class="card-text">
+            <strong>Start Time:</strong> {{ lesson.StartTime }}
+          </p>
+          <p class="card-text">
+            <strong>End Time:</strong> {{ lesson.EndTime }}
+          </p>
+          <p class="card-text">
+            <strong>Location:</strong> {{ lesson.Location }}
+          </p>
+          <p class="card-text"><strong>Cost:</strong> ${{ lesson.Cost }}</p>
+          <p class="card-text">
+            <strong>Has Booked:</strong>{{ lesson.IsBooked }}
+          </p>
+          {% if not lesson.IsBooked %}
+          <form
+            action="{{ url_for('book_lesson', lesson_id=lesson.LessonID) }}"
+            method="post"
+            onsubmit="return confirm('Are you sure you want to book this lesson? ${{ lesson.Cost }} will be directly paid from your account.');"
+          >
+            <input
+              type="hidden"
+              name="lesson_id"
+              value="{{ lesson.LessonID }}"
+            />
+            <button type="submit" class="btn btn-primary mt-3">
+              Book This Lesson
+            </button>
+          </form>
+          {% else %}
+          <button class="btn btn-secondary mt-3" disabled>
+            Already Booked
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card">
+        <img
+          src="/static/images/tutors/{{ lesson.TutorProfileImage }}"
+          class="card-img-top"
+          alt="Tutor Profile Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title">Tutor Information</h5>
+          <p class="card-text">
+            <strong>Name:</strong> {{ lesson.TutorFirstName }} {{
+            lesson.TutorFamilyName }}
+          </p>
+          <a
+            href="/profile/tutor/{{ lesson.TutorID}}"
+            class="btn btn-outline-primary"
+            >View Tutor Profile</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

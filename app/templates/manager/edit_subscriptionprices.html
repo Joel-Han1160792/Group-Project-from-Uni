@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    <a href="{{ url_for('manager_dashboard') }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>Subscription Prices</h2>
+
+  <form action="{{ url_for('editsubscriptionprices') }}" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">{{subscriptionprices[0][0]}}</label>
+      <input type="number" class="form-control" id="annual" name="{{subscriptionprices[0][0]}}" value="{{subscriptionprices[0][1]}}" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="form-label">{{subscriptionprices[1][0]}}</label>
+      <input type="number" class="form-control" id="monthly" name="{{subscriptionprices[1][0]}}" value="{{subscriptionprices[1][1]}}" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="form-label">{{subscriptionprices[2][0]}}</label>
+      <input type="number" class="form-control" id="discount" name="{{subscriptionprices[2][0]}}" value="{{subscriptionprices[2][1]}}" min="0" max="100" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
+</div>
+
+{% endblock %}

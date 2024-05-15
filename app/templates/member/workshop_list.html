@@ -1,0 +1,53 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-3">Workshop List</h2>
+  <form class="d-flex mb-4">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by title"
+      aria-label="Search"
+      name="search"
+      value="{{ search_query }}"
+    />
+    <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+  <div class="table-responsive workshopTable mb-4">
+    <table class="table table-success table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="col-2" >Workshop</th>
+          <th scope="col" class="col-1" >Location</th>
+          <th scope="col" class="col-1" >Date & Time</th>
+          <th scope="col" class="col-1" >Cost</th>
+          <th scope="col" class="col-1" >Capacity</th>
+          <th scope="col" class="col-1" >Tutor</th>
+          <th scope="col" class="col-1" ></th>
+        </tr>
+        <tbody>
+        {% for workshop in workshopList %}
+          <tr>
+            <td><a class="merino-link" href="/workshop/{{workshop[0]}}">{{workshop[1]}}</a></td>
+            <td>{{workshop[2]}}</td>
+            <td>{{workshop[3]}}<br/>
+              {{workshop[4]}}
+            </td>
+            <td>${{workshop[5]}}</td>
+            <td>{{workshop[6]}}</td>
+            <td><a class="merino-link" href="/tutorprofile/{{workshop[7]}}">{{workshop[8]}} {{workshop[9]}}</a></td>
+            <td>
+            {% if not session.get('role') %}
+            <a href="/workshops/booking/{{workshop[0]}}" class="btn btn-dark">Book now!</a></button>
+            {% endif%}
+          </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </thead>
+    </table>
+  </div>
+
+
+</div>
+{% endblock %}

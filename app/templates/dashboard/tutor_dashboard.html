@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Welcome to Tutor's Dashboard</h2>
+
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow h-100">
+        <img
+          src="{{ url_for('static', filename='images/workshop.jpg') }}"
+          class="card-img-top"
+          alt="Workshops Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><i class="fas fa-book"></i> Attendance</h5>
+          <p class="card-text">
+            Manage and schedule workshops, create opportunities for learning, and ensure efficient operations. Oversee workshop creation, scheduling, and updates.
+          </p>
+          </p>
+          <a
+            href="{{ url_for('manage_attendance') }}"
+            class="btn btn-success mt-2"
+  
+          >
+            Mark Attendance
+          </a>
+          <a
+            href="{{ url_for('tutor_workshop') }}"
+            class="btn btn-outline-secondary mt-2"
+          >
+            View Workshops Attendance
+          </a>
+          <a
+          href="{{ url_for('tutor_manage_lesson') }}"
+          class="btn btn-outline-primary mt-2"
+        >
+          View Lesson Attendance
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

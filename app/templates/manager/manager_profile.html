@@ -1,0 +1,34 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-3">Manager Details</h2>
+
+
+  <div class="card mt-4">
+    <div class="card-header bg-custom-primary text-white">Manager Details</div>
+    <ul class="list-group list-group-flush">
+    
+      <li class="list-group-item">
+        <strong>Whole Name:</strong> {{ profile[1] }}{{ profile[2] }}{{ profile[3] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Position:</strong> {{ profile[4] }}
+      </li>
+ 
+      <li class="list-group-item">
+        <strong>Phone:</strong> {{ profile[5] }}
+      </li>
+      <li class="list-group-item">
+        <strong>Email:</strong> {{ profile[6] }}
+      </li>
+      <li class="list-group-item">
+        <a href="{{ url_for('update_info_manager') }}" class="btn btn-primary btn-lg custom-link">Update Your Information</a>
+
+      </li>
+    </ul>
+  </div>
+
+
+</div>
+
+{% endblock %}

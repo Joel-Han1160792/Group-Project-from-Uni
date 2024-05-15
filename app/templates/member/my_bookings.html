@@ -1,0 +1,50 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-4">
+  <div class="mb-4">
+    {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+    'manager_dashboard' } %} {% set current_back_urls =
+    back_urls[session.get('role')] %}
+    <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h2>My Bookings</h2>
+  {% if bookings %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Booking ID</th>
+        <th scope="col">Booking Title</th>
+        <th scope="col">Booking Category</th>
+        <th scope="col">Status</th>
+        <th scope="col">Booking Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.BookingID }}</td>
+        <td>{{ booking.BookingType }}</td>
+        <td>{{ booking.BookingCategory }}</td>
+        <td>{{ booking.Status }}</td>
+        <td>{{ booking.BookingDate | format_date}}</td>
+        <td>
+          <a
+            href="{{ url_for('booking_details', booking_id=booking.BookingID) }}"
+            class="btn btn-sm btn-primary"
+            >View</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No bookings found.</p>
+  {% endif %}
+</div>
+{% endblock %}

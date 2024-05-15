@@ -1,0 +1,64 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Welcome to Manager's Dashboard</h2>
+
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow h-100">
+        <img
+          src="{{ url_for('static', filename='images/workshop.jpg') }}"
+          class="card-img-top"
+          alt="Workshops Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><i class="fas fa-book"></i> Workshops Schedule</h5>
+          <p class="card-text">
+            Manage and schedule workshops, create opportunities for learning, and ensure efficient operations. Oversee workshop creation, scheduling, and updates.
+          </p>
+          </p>
+          <a
+            href="{{ url_for('add_workshop') }}"
+            class="btn btn-outline-primary"
+          >
+            Add Workshop
+          </a>
+          <a
+            href="{{ url_for('view_workshops') }}"
+            class="btn btn-outline-secondary"
+          >
+            View/Update Workshops
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow h-100">
+        <img
+          src="{{ url_for('static', filename='images/lesson_type.jpg') }}"
+          class="card-img-top"
+          alt="Workshops Image"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><i class="fas fa-book"></i> Lesson Types</h5>
+          <p class="card-text">
+            Create and manage lessons types to ensure clear communication about lesson oﬀerings and make adjustments based on member feedback
+          </p>
+          </p>
+          <a
+            href="{{ url_for('add_lesson_type') }}"
+            class="btn btn-outline-primary"
+          >
+            Add Lesson Types
+          </a>
+          <a
+            href="{{ url_for('list_lesson_types') }}"
+            class="btn btn-outline-secondary"
+          >
+            View/Update Lesson Types
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'layout.html' %} 
+{% block content %}
+
+<div class="container mt-4">
+  <div class="mb-4">
+    {% set back_urls = { 1: 'member_dashboard', 2: 'tutor_dashboard', 3:
+    'manager_dashboard' } %} {% set current_back_urls =
+    back_urls[session.get('role')] %}
+    <a href="{{ url_for(current_back_urls) }}" class="btn btn-light btn-sm">
+      <i class="fas fa-arrow-left"></i> Back
+    </a>
+  </div>
+  <h2>News</h2>
+
+  <form class="d-flex my-4" action = "/news" method="POST">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by news title"
+      aria-label="Search"
+      name="search"
+    />
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+  </form>
+
+  {% if role == 3%}
+  <a href="/addnews" class="btn btn-primary mb-3">Add News</a>
+  {% endif %} 
+  {% for news in newslist %}
+  <div class="card mb-3">
+    <div class="card-body">
+      {% if news[6] != 1 %}
+      <h5
+        id="news-title-{{ news[0] }}"
+        class="card-title bg-success p-3 mb-2 text-white d-flex justify-content-between align-items-center"
+      >
+      {% else %}
+      <h5
+        id="news-title-{{ news[0] }}"
+        class="card-title bg-secondary p-3 mb-2 text-white d-flex justify-content-between align-items-center"
+      >
+      {% endif %}
+        {{news[1]}}
+        <div>
+          {% if role == 3%}
+          <a
+            href="{{url_for('editnews',id=news[0])}}"
+            class="btn btn-md btn-primary mr-2"
+            >Edit</a
+          >
+          <a
+            href="{{url_for('deletenews',id=news[0])}}"
+            class="btn btn-md btn-danger"
+            >Delete</a
+          >
+          {% endif %}
+
+          {% if news[6] == 1 %}
+          <a class="btn btn-md btn-light " href = "{{url_for('unreadnews', newsid = news[0])}}">Mark as Unread</a>
+          {% else %}
+          <a class="btn btn-md btn-dark " href = "{{url_for('readnews', newsid = news[0])}}">Mark as Read</a>
+          {% endif %}
+        </div>
+      </h5>
+      <p class="card-text">{{news[2]}}</p>
+      <p class="card-text">
+        <small class="text-body-secondary"
+          >Last created by {{news[3]}} {{news[4]}}</small
+        >
+      </p>
+      <p class="card-text">
+        <small class="text-body-secondary">Last updated at {{ format_date(news[5], '%d/%m/%Y %H:%M:%S' )}}</small>
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+

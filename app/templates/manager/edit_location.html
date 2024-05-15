@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <a href="{{ url_for('location_management') }}" class="btn btn-light btn-sm">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+  <h2>Edit Location</h2>
+  <form action="" method="post">
+    <div class="mb-3">
+      <label for="locationID" class="form-label">Location</label>
+      <input
+      type="hidden"
+      name="locationID" 
+      value="{{ location['LocationID'] }}"
+    />
+      <input type="text" class="form-control" id="locationName" name="locationName" value="{{ location['LocationName'] }}" required>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" name="description" rows="3" required>{{ location['Description'] }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="available" class="form-label">Available</label>
+      <select class="form-select" id="available" name="available" required>
+        <option value=1 {% if location.Available == 1 %}selected{% endif %}>Available</option>
+        <option value=0 {% if location.Available == 0 %}selected{% endif %}>Unavailable</option>
+      </select>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Location</button>
+  </form>
+</div>
+
+{% endblock %}

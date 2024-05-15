@@ -1,0 +1,199 @@
+{% extends 'layout.html' %} {% block title %}Home{% endblock %} {% block content
+%}
+
+<div class="herobanner">
+  <div class="bannerContainer">
+    <div class="fw-lighter slogon fw-bold">
+      Exploring The World Of Merino Sheep
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row my-4">  
+    <div class="col-md-9">
+      <!-- Merino info start -->
+      <div class="">
+        <h1>Merino</h1>
+        <p>
+          The Merino is a breed or group of breeds of domestic sheep,
+          characterised by very fine soft wool. It was established in Spain near
+          the end of the Middle Ages, and was for several centuries kept as a
+          strict Spanish monopoly; exports of the breed were not allowed, and
+          those who tried risked capital punishment. During the eighteenth
+          century, flocks were sent to the courts of a number of European
+          countries, including France (where they developed into the Rambouillet),
+          Hungary, the Netherlands, Prussia, Saxony and Sweden. The Merino
+          subsequently spread to many parts of the world, including South Africa,
+          Australia, and New Zealand.
+        </p>
+      </div>
+      <!-- Merino info end -->
+      <hr />
+      <!-- Workshop start -->
+      <div class="">
+        <h2>Popular Workshops</h2>
+        <p>
+          Join us for an engaging and informative workshop on Merino sheep husbandry, where we will explore various aspects of raising and managing Merino sheep. This workshop is designed for both novice and experienced sheep farmers who are interested in maximizing the productivity and welfare of their Merino flocks.
+        </p>
+        <p>Check out for <a class="merino-link" href="/all-workshops">all workshops.</a> 
+        </p>
+        <div class="table-responsive workshopTable mb-4">
+          <table class="table table-success table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col" class="col-2" >Workshop</th>
+                <th scope="col" class="col-1" >Location</th>
+                <th scope="col" class="col-2" >Date & Time</th>
+                <th scope="col" class="col-1" >Cost</th>
+                <th scope="col" class="col-1" >Capacity</th>
+                <th scope="col" class="col-1" >Tutor</th>
+              </tr>
+              <tbody>
+              {% for workshop in workshopList %}
+                <tr>
+                  <td><a class="merino-link" href="/workshop/{{workshop[0]}}">{{workshop[1]}}</a></td>
+                  <td>{{workshop[2]}}</td>
+                  <td>{{workshop[3]}}<br/>
+                    {{workshop[4]}}
+                  </td>
+                  <td>${{workshop[5]}}</td>
+                  <td>{{workshop[6]}}</td>
+                  <td><a class="merino-link" href="/tutorprofile/{{workshop[7]}}">{{workshop[8]}} {{workshop[9]}}</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </thead>
+          </table>
+        </div>
+      </div>
+      <!-- Workshop scheduel end -->
+    </div>
+    <div class="col-md-3 d-sm-none d-md-block">
+      <h3 class="mb-4">People also ask</h3>
+      <div class="accordion accordion-flush" id="accordionFlush">
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button  " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              How much does a sheep eat per day in kg?
+            </button>
+          </h4>
+          <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush">
+            <div class="accordion-body">It should be fed in conjunction with forage and fed at up to 1kg per head per day. Depending on the grass available, it may be necessary to provide extra hay, especially if summers are extremely dry and grass growth is poor. In winter you should allow for approximately 2kg of hay per sheep per day.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="flush-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              What can sheep not eat?
+            </button>
+          </h4>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlush">
+            <div class="accordion-body">Some common garden plants, such as azaleas, chrysanthemums, acorns, buttercups, daffodils, holly and elderberry are poisonous for sheep to eat. Therefore, ensure they do not have access to garden areas, and when gardening ensure you don't throw garden waste into your paddocks, and that your paddocks are well fenced.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="flush-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              What do you feed sheep for wool production?
+            </button>
+          </h4>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlush">
+            <div class="accordion-body">Sheep make excellent use of high-quality roughage stored either as hay or low-moisture, grass-legume silage or occasionally chopped green feed. Good-quality hay or stored forage is a highly productive feed; poor-quality forage, no matter how much is available, is suitable only for maintenance.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h4 class="accordion-header" id="flush-collapse-4">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-4" aria-expanded="false" aria-controls="flush-collapse-4">
+              How do we run our workshop?
+            </button>
+          </h4>
+          <div id="flush-collapse-4" class="accordion-collapse collapse" aria-labelledby="flush-collapse-4" data-bs-parent="#accordionFlush">
+            <div class="accordion-body">Bookings
+              for workshops and one-on-one lessons with tutors, empower tutors to manage their tutoring schedules</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tutor row start-->
+  <div class="row mb-4">
+    <div class="col-md-9">
+      <h2>Tutors</h2>
+      <p>
+        We're excited to introduce you to our team of experienced and dedicated tutors who will be leading you on an enriching journey into the world of Merino sheep husbandry. Our workshop instructors are renowned experts in their field, with years of hands-on experience and a passion for sharing their knowledge with others. Get ready to learn from the best as we introduce you to our esteemed tutors who will be your guides to mastering the art of Merino sheep farming. <a class="merino-link" href="/alltutors">View all tutors</a>
+      </p>
+    </div>
+    <div class="col-12">
+      <div class="tutorSlick slick-slider">
+      {% for tutor in tutorlist %}
+        <div class="mb-2 slick-slide">
+          <div class="card tutor" >
+            <img src="/static/images/tutors/{{tutor[8]}}" class="card-img-top" alt="{{tutor[2]}} {{tutor[3]}}">
+            <div class="card-body">
+              <h5 class="card-title">{{tutor[1]}} {{tutor[2]}} {{tutor[3]}}</h5>
+              <p class="fs-6 lead">{{tutor[4]}}</p>
+              <!-- <p class="card-text">{{tutor[1]}} {{tutor[3]}} </p> -->
+              <p class="card-text text-truncate">{{tutor[7]}}</p>
+              <a href="/tutorprofile/{{tutor[0]}}" class="btn btn-dark">Details</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}    
+      </div>
+    </div> 
+  </div>    
+  <!-- Tutor row end--> 
+</div>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+ 
+  $('.tutorSlick').slick({
+    dots: false,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    arrows:true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 780,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          dots: true,
+          arrows:true,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: true,
+          arrows:false,
+        }
+      }
+      // You can unslick at a given breakpoint now by adding:
+      // settings: "unslick"
+      // instead of a settings object
+    ]
+  });
+</script>
+{% endblock %}
